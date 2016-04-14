@@ -39,7 +39,7 @@ router.get('/', function(req, res, next) {
 /* POST /api/students */
 router.post('/', function(req, res, next) {
   var responseBody = {
-    id: students.length,
+    id: students.length + 1,
     firstName: req.body.firstName,
     lastName: req.body.lastName
   }
@@ -54,12 +54,26 @@ router.get('/:id', setStudent, function(req, res, next) {
 
 /* PUT /api/students/:id */
 router.put('/:id', setStudent, function(req, res, next) {
-  res.json(res.student);
+  // Faking updating student
+  params = _.pick(req.body, 'firstName', 'lastName')
+  params.id = parseInt(req.params.id);
+  students = _.reject(students, function(student) {
+    return student.id == req.params.id;
+  });
+  students.push(params);
+  students = _.sortBy(students, function(student) {
+    return student.id;
+  })
+
+  res.json(params);
 });
 
 /* DELETE /api/students/:id */
 router.delete('/:id', setStudent, function(req, res, next) {
-  res.json(res.student);
+  students = _.reject(students, function(student) {
+    return student.id == req.params.id;
+  });
+  res.status(204).send();
 });
 
 module.exports = router;
