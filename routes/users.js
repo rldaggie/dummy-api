@@ -52,4 +52,14 @@ router.get('/:id', setStudent, function(req, res, next) {
   res.json(res.student);
 });
 
+/* PUT /api/students/:id */
+router.put('/:id', setStudent, function(req, res, next) {
+  res.json(res.student);
+});
+
+/* DELETE /api/students/:id */
+router.delete('/:id', setStudent, function(req, res, next) {
+  res.json(res.student);
+});
+
 module.exports = router;
