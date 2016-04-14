@@ -18,9 +18,20 @@ var students = [
   }
 ]
 
-/* GET users listing. */
+/* GET /api/students */
 router.get('/', function(req, res, next) {
   res.json(students);
+});
+
+/* POST /api/students */
+router.post('/', function(req, res, next) {
+  var responseBody = {
+    id: students.length,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName
+  }
+  students.push(responseBody)
+  res.json(responseBody);
 });
 
 module.exports = router;
